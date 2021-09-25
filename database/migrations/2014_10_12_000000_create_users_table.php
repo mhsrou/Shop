@@ -9,7 +9,7 @@ class CreateUsersTable extends Migration
     /**
      * Run the migrations.
      *
-     * @return void
+     * @return voidelena.simonis@example.net
      */
     public function up()
     {
@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('email')->unique();
-            $table->bigInteger('phone')->unique();
+            $table->bigInteger('phone')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
