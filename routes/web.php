@@ -25,3 +25,13 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Route::resource('/product', ProductController::class);
+
+Route::delete('product/{product}/force', [ProductController::class, 'forceDelete'])
+    ->name('product.forceDelete');
+
+Route::patch('product/{product}/restore', [ProductController::class, 'restore'])
+    ->name('product.restore');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -8,10 +8,10 @@
             @endforeach
         </ul>
 @endif
-<div class="container">
+<div class="container bg-white">
     <div class="row">
         <div class="col-12 pt-2">
-            <a href="/products" class="btn btn-outline-primary btn-sm">Go back</a>
+            <a href="/product" class="btn btn-outline-primary btn-sm">Go back</a>
             <div class="border rounded mt-5 pl-4 pr-4 pt-4 pb-4">
                 <h2 class="display-4">Create a New Product Post</h2>
                 <p>Fill and submit for a new product</p>
@@ -27,9 +27,9 @@
                             <input type="text" id="name" class="form-control" name="name" required>
                         </div>
                         <div class="control-group col-12 mt-2">
-                            <label for="description">Description</label>
-                            <textarea id="description" class="ckeditor form-control" name="description"
-                                      placeholder="Enter Description" rows="" required></textarea>
+                            <label for="desc">Description</label>
+                            <textarea id="desc" class="ckeditor form-control" name="desc"
+                                      placeholder="Enter desc" rows=""></textarea>
                         </div>
                         <div class="control-group col-12 mt-2">
                             <label for="image">Image Upload</label>
@@ -37,7 +37,7 @@
                         </div>
                         <div class="control-group col-12 mt-2">
                             <label for="price">Price</label>
-                            <input type="number" name="price" id="image" placeholder="Enter Price" required>
+                            <input type="number" name="price" id="price" class="form-control" placeholder="Enter Price">
                         </div>
                     </div>
                     <div class="row mt-2">
