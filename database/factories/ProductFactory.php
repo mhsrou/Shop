@@ -24,8 +24,8 @@ class ProductFactory extends Factory
         return [
             'name' => $this->faker->company(),
             'desc' => $this->faker->city(),
-            'image' => $this->faker->image(),
-            'price' => $this->faker->numerify(),
+            'image' => rand(1,3).'.jpg',
+            'price' => rand(10000,90000).'000',
         ];
     }
 }

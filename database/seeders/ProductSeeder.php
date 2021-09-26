@@ -14,12 +14,6 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'name' => 'Super Admin',
-            'email' => 'superadmin@example.com',
-            'password' => '12345678',
-        ]);
-
         Product::factory()
             ->count(10)
             ->create();

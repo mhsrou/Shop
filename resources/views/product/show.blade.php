@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('content')
-    @if (session('message'))
+    @if (session('create'))
         <div class="alert alert-success">
             <ul>
-                {{ session('message') }}
+                {{ session('create') }}
             </ul>
         </div>
     @endif
@@ -11,6 +11,13 @@
         <div class="alert alert-danger">
             <ul>
                 {{ session('delete') }}
+            </ul>
+        </div>
+    @endif
+    @if (session('update'))
+        <div class="alert alert-success">
+            <ul>
+                {{ session('update') }}
             </ul>
         </div>
     @endif
@@ -26,6 +33,7 @@
                         <div class="small text-muted">{{ $product->updated_at }}</div>
                         <h2 class="card-title">{{ $product->name }}</h2>
                         <p class="card-text">{!! $product->desc !!}</p>
+                        <p class="card-text">{!! $product->price !!}</p>
                         <a href="/product/{{ $product->id }}/edit" class="btn btn-outline-primary">Edit Post</a>
                         <br><br>
                         @if ($product->deleted_at)

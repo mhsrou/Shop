@@ -99,7 +99,7 @@ class ProductController extends Controller
 
         $updatedProduct = $product->update($validated);
 
-        return redirect(route('product.show', $product->id))->with('create', 'Product updated successfully');
+        return redirect(route('product.show', $updatedProduct))->with('update', 'Product updated successfully');
     }
 
     /**
@@ -129,5 +129,11 @@ class ProductController extends Controller
         Product::withTrashed()->find($id)->restore();
 
         return back()->with('product', 'Product post restored');
+    }
+
+    public function deletedProducts()
+    {
+        $products = Product::onlyTrashed()->get();
+        return view('product.index')->with('products', $products);
     }
 }
