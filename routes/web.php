@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -19,22 +20,36 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/product/{id}', function ($id) {
+    $product = Product::withoutTrashed()->findOrFail($id);
+    return view('user.product.show')->with('product', $product);
+});
+
+Route::get('/product', function () {
+    $products = Product::withoutTrashed()->get();
+    return view('user.product.index')->with('products', $products);
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 
-Route::resource('/product', ProductController::class);
+Route::prefix('/admin')->name('admin.')->group(function(){
 
-Route::delete('product/{product}/force', [ProductController::class, 'forceDelete'])
-    ->name('product.forceDelete');
+    Route::resource('/product', ProductController::class);
 
-Route::patch('product/{product}/restore', [ProductController::class, 'restore'])
-    ->name('product.restore');
+    Route::delete('/product/{product}/force', [ProductController::class, 'forceDelete'])
+        ->name('product.forceDelete');
 
-Route::get('/dproduct', [ProductController::class, 'deletedProducts'])
-    ->name('product.deleted');
+    Route::patch('/product/{product}/restore', [ProductController::class, 'restore'])
+        ->name('product.restore');
+
+    Route::get('/dproduct', [ProductController::class, 'deletedProducts'])
+        ->name('product.deleted');
+
+});
 
 Auth::routes();
 

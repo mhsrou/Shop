@@ -11,9 +11,9 @@
     <div class="container">
         @foreach($products as $product)
         @if (!$product->deleted_at)
-            <a href="{{ route('product.deleted') }}" class="btn btn-outline-primary btn-sm mb-5">Deleted Products</a>
+            <a href="{{ route('admin.product.deleted') }}" class="btn btn-outline-primary btn-sm mb-5">Deleted Products</a>
         @else
-            <a href="/product" class="btn btn-outline-primary btn-sm mb-5">Go back</a>
+            <a href="admin/product" class="btn btn-outline-primary btn-sm mb-5">Go back</a>
         @endif
         @break
         @endforeach
@@ -28,7 +28,7 @@
                                 <div class="small text-muted">{{ $product->price }}</div>
                                 <h2 class="card-title">{{ $product->name }}</h2>
                                 <p class="card-text">{{ Str::limit($product->description, 20) }}</p>
-                                <a href="{{ route('product.show', $product) }}" target="_blank">read more...</a>
+                                <a href="{{ route('admin.product.show', $product) }}" target="_blank">read more...</a>
                             </div>
                         </div>
                     @else
@@ -39,7 +39,7 @@
                                 <div class="small text-muted">{{ $product->price }}</div>
                                 <h2 class="card-title">{{ $product->name }}</h2>
                                 <p class="card-text">{{ Str::limit($product->description, 20) }}</p>
-                                <a href="{{ route('product.show', $product) }}">read more...</a>
+                                <a href="{{ route('admin.product.show', $product) }}">read more...</a>
                             </div>
                         </div>
                     @endif

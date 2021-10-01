@@ -17,7 +17,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::withoutTrashed()->get(); //fetch all blog posts from DB
-        return view('product.index')->with('products', $products);
+        return view('admin.product.index')->with('products', $products);
     }
 
     /**
@@ -27,7 +27,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('product.create');
+        return view('admin.product.create');
     }
 
     /**
@@ -48,7 +48,7 @@ class ProductController extends Controller
 
         $newProduct = Product::create($validated);
 
-        return redirect(route('product.show', $newProduct->id))->with('create', 'Product created');
+        return redirect(route('admin.product.show', $newProduct->id))->with('create', 'Product created');
     }
 
     /**
@@ -59,7 +59,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::withTrashed()->findOrFail($id);
-        return view('product.show')->with('product', $product);
+        return view('admin.product.show')->with('product', $product);
     }
 
     /**
@@ -71,7 +71,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        return view('product.edit')->with('product', $product);
+        return view('admin.product.edit')->with('product', $product);
     }
 
     /**
@@ -99,7 +99,7 @@ class ProductController extends Controller
 
         $updatedProduct = $product->update($validated);
 
-        return redirect(route('product.show', $updatedProduct))->with('update', 'Product updated successfully');
+        return redirect(route('admin.product.show', $updatedProduct))->with('update', 'Product updated successfully');
     }
 
     /**
@@ -121,7 +121,7 @@ class ProductController extends Controller
         Product::withTrashed()->find($id)->forceDelete();
 
         return redirect()
-            ->route('product.index')->with('forceDelete', 'Product post deleted permanently');
+            ->route('admin.product.index')->with('forceDelete', 'Product post deleted permanently');
     }
 
     public function restore($id)
@@ -134,6 +134,6 @@ class ProductController extends Controller
     public function deletedProducts()
     {
         $products = Product::onlyTrashed()->get();
-        return view('product.index')->with('products', $products);
+        return view('admin.product.index')->with('products', $products);
     }
 }
