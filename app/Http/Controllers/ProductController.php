@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
-use Illuminate\Http\Request;
-use function GuzzleHttp\Promise\all;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -16,8 +15,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::withoutTrashed()->get(); //fetch all blog posts from DB
-        return view('admin.product.index')->with('products', $products);
+        $products = Product::withoutTrashed()->paginate(10);
+        return view('product.home')->with('products', $products);
     }
 
     /**
@@ -27,6 +26,8 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Product::class);
+
         return view('admin.product.create');
     }
 
@@ -38,9 +39,18 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+
+        $this->authorize('create', Product::class);
+
         $imageName = time() . '.' . $request->image->extension();
 
-        $request->image->move(public_path('images'), $imageName);
+
+        if ($request->hasFile('image'))
+            $path = Storage::putFileAs(
+                'images', $request->file('image'), $imageName
+            );
+
+        //$request->image->move(public_path('images'), $imageName);
 
         $validated = $request->validated();
 
@@ -59,7 +69,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::withTrashed()->findOrFail($id);
-        return view('admin.product.show')->with('product', $product);
+        return view('product.show')->with('product', $product);
     }
 
     /**
@@ -68,9 +78,11 @@ class ProductController extends Controller
      * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        $product = Product::findOrFail($id);
+        $this->authorize('create', $product);
+
+        $product = Product::findOrFail($product->id);
         return view('admin.product.edit')->with('product', $product);
     }
 
@@ -83,6 +95,8 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
+        $this->authorize('create', $product);
+
         if ($request->has('image')) {
 
             $imageName = time() . '.' . $request->image->extension();
@@ -110,14 +124,18 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        $this->authorize('delete', $product);
+
         Product::find($product->id)->delete();
 
-        return back()->with('product', $product)
+        return back()->with('product', $product->id)
             ->with('delete', 'Product post deleted');
     }
 
     public function forceDelete($id)
     {
+        $this->authorize('delete', $product);
+
         Product::withTrashed()->find($id)->forceDelete();
 
         return redirect()
@@ -133,7 +151,7 @@ class ProductController extends Controller
 
     public function deletedProducts()
     {
-        $products = Product::onlyTrashed()->get();
+        $products = Product::onlyTrashed()->paginate(10);
         return view('admin.product.index')->with('products', $products);
     }
 }

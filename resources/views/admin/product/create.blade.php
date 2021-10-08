@@ -11,14 +11,14 @@
 <div class="container bg-white">
     <div class="row">
         <div class="col-12 pt-2">
-            <a href="/product" class="btn btn-outline-primary btn-sm">Go back</a>
+            <a href="admin/product" class="btn btn-outline-primary btn-sm">Go back</a>
             <div class="border rounded mt-5 pl-4 pr-4 pt-4 pb-4">
                 <h2 class="display-4">Create a New Product Post</h2>
                 <p>Fill and submit for a new product</p>
 
                 <hr>
 
-                <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="user_id" value="{{Auth::id()}}">
                     @csrf
                     <div class="row">

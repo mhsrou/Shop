@@ -21,13 +21,14 @@
                         <!-- Sale badge-->
                         <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale
                         </div>
+                        <a class="link-dark" href="{{route('product.detail', $product)}}">
                         <!-- Product image-->
-                        <img class="card-img-top" src="{{ asset('images/' . $product->image) }}"/>
+                        <img class="card-img-top" src="{{ asset('storage/images/' . $product->image) }}"/>
                         <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <!-- Product name-->
-                                <h5 class="fw-bolder">{{ $product->name }}</h5>
+                                <h5 class="fw-bolder">{{ $product->name }}</h5></a>
                                 <!-- Product reviews-->
                                 <div class="d-flex justify-content-center small text-warning mb-2">
                                     <div class="bi-star-fill"></div>
@@ -50,9 +51,7 @@
                 </div>
                 @endforeach
         </div>
+    {{$products->links()}}
     </div>
 </section>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-        crossorigin="anonymous"></script>

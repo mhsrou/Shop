@@ -26,6 +26,8 @@ class ProductFactory extends Factory
             'desc' => $this->faker->city(),
             'image' => rand(1,3).'.jpg',
             'price' => rand(10000,90000).'000',
+            'discount' => rand(0,7)*10,
+            'is_incredible' => rand(0,1)<0.5,
         ];
     }
 }

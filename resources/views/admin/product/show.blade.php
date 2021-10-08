@@ -28,7 +28,7 @@
             <div class="col-lg-8">
                 <div class="card mb-4">
                     <a href="#!"><img class="img-thumbnail" width="450px" height="450px"
-                                      src="{{ asset('images/' . $product->image) }}"></a>
+                                      src="{{ asset('storage/images/' . $product->image) }}"></a>
                     <div class="card-body">
                         <div class="small text-muted">{{ $product->updated_at }}</div>
                         <h2 class="card-title">{{ $product->name }}</h2>
@@ -37,13 +37,13 @@
                         <a href="/admin/product/{{ $product->id }}/edit" class="btn btn-outline-primary">Edit Post</a>
                         <br><br>
                         @if ($product->deleted_at)
-                            <form method="post" action="{{ route('admin.product.forceDelete', $product) }}">
+                            <form style="display:inline" method="post" action="{{ route('admin.product.forceDelete', $product) }}">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-outline-danger" type="submit">Force Delete</button>
                             </form>
 
-                            <form method="post" action="{{ route('admin.product.restore', $product) }}">
+                            <form style="display:inline" method="post" action="{{ route('admin.product.restore', $product) }}">
                                 @csrf
                                 @method('PATCH')
                                 <button class="btn btn-outline-success" type="submit">Restore</button>
