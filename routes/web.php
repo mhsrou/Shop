@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
@@ -46,5 +47,9 @@ Route::prefix('/admin')->name('admin.')->group(function(){
 
 });
 
-Auth::routes();
+//Auth::routes();
+
+    //category
+
+Route::resource('/category', CategoryController::class);
 
