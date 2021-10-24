@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    $products = Product::withoutTrashed()->where('is_incredible', 1)->get();
+    $products = Product::where('is_incredible', 1)->get();
     return view('product.home')->with('products' , $products);
 });
 
@@ -37,7 +37,7 @@ Route::prefix('/admin')->name('admin.')->group(function(){
 
     //users----------
 
-    Route::resource('/user', UserController::class);
+    Route::resource('/user', UserController::class)->only(['index','destroy']);
 
     Route::delete('/user/{user}/force', [UserController::class, 'forceDelete'])
         ->name('user.forceDelete');

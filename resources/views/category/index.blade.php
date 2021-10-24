@@ -1,16 +1,5 @@
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-    <title>Shop Homepage - Start Bootstrap Template</title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
-    <!-- Bootstrap icons-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet"/>
-</head>
+@extends('product.main')
+@section('content')
 
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
@@ -19,7 +8,7 @@
                 <div class="col mb-5">
                     <div class="card h-100">
                         <!-- Sale badge-->
-                        <a class="link-dark" href="{{route('category.list', $category)}}">
+                        <a class="link-dark" href="{{route('category.show', $category)}}">
                             <!-- Product image-->
                             <img class="card-img-top" src="{{ asset('storage/images/'.$category->image) }}"/>
                             <!-- Product details-->
@@ -37,3 +26,4 @@
     </div>
 </section>
 
+@endsection
