@@ -1,4 +1,12 @@
 <header class="bg-dark py-5">
+    <style>
+        .carousel img {
+    height: 220px;
+    width: 100%;
+    object-fit: scale-down;
+    object-position: center;
+}
+    </style>
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -12,13 +20,13 @@
                 </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="{{ asset('storage/images/1.jpg')}}" style="height: 150px width:150px">
+                        <img src="{{ asset('storage/images/1.jpg')}}" >
                     </div>
                     <div class="carousel-item">
-                        <img src="{{ asset('storage/images/2.jpg')}}" style="height: 150px width:150px">
+                        <img src="{{ asset('storage/images/2.jpg')}}" >
                     </div>
                     <div class="carousel-item">
-                        <img src="{{ asset('storage/images/3.jpg')}}" style="height: 150px width:150px">
+                        <img src="{{ asset('storage/images/3.jpg')}}" >
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
