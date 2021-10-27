@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
@@ -21,8 +22,11 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index($id)
     {
-        return view('home');
+        $products = Product::where('category_id', $id)->get();
+        $incredibleProducts = Product::where('category_id', $id)->where('is_incredible', 1)->withoutTrashed()->get();
+        return view('product.home', compact('products','incredibleProducts'));
     }
+    
 }

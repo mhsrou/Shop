@@ -3,23 +3,27 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\HomeController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    $products = Product::where('is_incredible', 1)->get();
-    return view('product.home')->with('products' , $products);
+    $products = Product::all();
+    $incredibleProducts = Product::where('is_incredible', 1)->get();
+    return view('product.home', compact('products','incredibleProducts'));
 });
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 //products-------
+
+Route::get('/main/{category}', [HomeController::class,'index'])->name('home.index');
 
 Route::resource('/product', ProductController::class);
 
@@ -33,23 +37,21 @@ Route::get('/dproduct', [ProductController::class, 'deletedProducts'])
     ->name('product.deleted');
 
 
-Route::prefix('/admin')->name('admin.')->group(function(){
+Route::prefix('/admin')->name('admin.')->group(function () {
 
     //users----------
 
-    Route::resource('/user', UserController::class)->only(['index','destroy']);
+    Route::resource('/user', UserController::class)->only(['index', 'destroy']);
 
     Route::delete('/user/{user}/force', [UserController::class, 'forceDelete'])
         ->name('user.forceDelete');
 
     Route::patch('/user/{user}/restore', [UserController::class, 'restore'])
         ->name('user.restore');
-
 });
 
 //Auth::routes();
 
-    //category
+//category
 
 Route::resource('/category', CategoryController::class);
-

@@ -1,8 +1,8 @@
 @extends('product.main')
 @section('content')
 @push('css')
-    <link href="css/styles.css" rel="stylesheet" />
-    <link href="css/slider.css" rel="stylesheet" />
+    <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
+    <link href="{{ asset('css/slider.css')}}" rel="stylesheet" />
 @endpush
     @include('product.header')
 
@@ -13,7 +13,7 @@
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Sale badge-->
-                            <a class="link-dark" href="{{ route('category.show', $category) }}">
+                            <a class="link-dark" href="{{ route('home.index', $category->id) }}">
                                 <!-- Product image-->
                                 <img class="card-img-top" src="{{ asset('storage/images/' . $category->image) }}" />
                                 <!-- Product details-->

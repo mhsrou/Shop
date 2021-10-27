@@ -1,6 +1,9 @@
 @extends('product.main')
 @section('content')
-
+@push('css')
+<link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
+<link href="{{ asset('css/slider.css')}}" rel="stylesheet" />
+@endpush
     @include('product.header')
 
     <section class="py-5">
@@ -12,25 +15,25 @@
                 </h2>
                 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
-                        @foreach ($products as $product)
+                        @foreach ($incredibleProducts as $incredibleProduct)
 
                             @if ($loop->iteration % 3 == 1)
                                 <div class="carousel-item @if ($loop->first)active @endif">
                                     <div class="cards-wrapper">
                             @endif
                             <div class="card @if ($loop->iteration % 3 != 1) d-none d-md-block @endif">
-                                <div class="badge bg-info text-white position-absolute m-1">{{ $product->discount }}%
+                                <div class="badge bg-info text-white position-absolute m-1">{{ $incredibleProduct->discount }}%
                                 </div>
-                                <img src="{{ asset('storage/images/' . $product->image) }}" class="card-img-top"
+                                <img src="{{ asset('storage/images/' . $incredibleProduct->image) }}" class="card-img-top"
                                     alt="...">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ $product->name }}</h5>
+                                    <h5 class="card-title">{{ $incredibleProduct->name }}</h5>
 
                                     <p class="card-text">
-                                        <span class="text-muted text-decoration-line-through">{{ $product->price }}</span>
-                                        {{ $product->price * (100 - $product->discount) }}
+                                        <span class="text-muted text-decoration-line-through">{{ $incredibleProduct->price }}</span>
+                                        {{ $incredibleProduct->price * (100 - $incredibleProduct->discount) }}
                                     </p>
-                                    <a href="{{ route('product.show', $product) }}" class="btn btn-primary">More...</a>
+                                    <a href="{{ route('product.show', $incredibleProduct) }}" class="btn btn-primary">More...</a>
                                 </div>
                             </div>
                             @if ($loop->iteration % 3 == 0 || $loop->last)

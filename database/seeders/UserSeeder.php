@@ -15,15 +15,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-
-        User::create([
-            'name' => 'Super Admin',
-            'email' => 'superadmin@example.com',
-            'password' => Hash::make('12345678'),
-            'role_id' => rand(2,5)
-        ]);
         User::factory()
-            ->count(20)
+            ->count(10)
             ->create();
     }
 }

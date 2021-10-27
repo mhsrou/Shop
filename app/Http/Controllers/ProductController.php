@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -15,8 +16,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::withoutTrashed()->paginate(10);
-        return view('product.home')->with('products', $products);
+        $products = Product::withTrashed()->paginate(10);
+        return view('admin.product.index', compact('products'));
     }
 
     /**
@@ -68,7 +69,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::withTrashed()->findOrFail($id);
+        $product = Product::findOrFail($id);
         return view('product.show')->with('product', $product);
     }
 
@@ -80,9 +81,6 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $this->authorize('create', $product);
-
-        $product = Product::findOrFail($product->id);
         return view('admin.product.edit')->with('product', $product);
     }
 
@@ -134,7 +132,7 @@ class ProductController extends Controller
 
     public function forceDelete($id)
     {
-        $this->authorize('delete', $product);
+        $this->authorize('delete', $id);
 
         Product::withTrashed()->find($id)->forceDelete();
 

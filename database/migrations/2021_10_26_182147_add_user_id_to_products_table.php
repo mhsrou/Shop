@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIsAdminAndRoleIdToUsers extends Migration
+class AddUserIdToProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddIsAdminAndRoleIdToUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('role_id')->default(1)->after('id');
-            $table->boolean('is_admin')->default(false)->after('id');
+        Schema::table('products', function (Blueprint $table) {
+            $table->foreignIdFor(\App\Models\User::class, 'user_id')->after('id');
         });
     }
 
@@ -26,8 +25,8 @@ class AddIsAdminAndRoleIdToUsers extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumns(['is_admin','role_id']);
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropColumn('user_id');
         });
     }
 }

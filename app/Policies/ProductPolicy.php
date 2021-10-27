@@ -13,9 +13,7 @@ class ProductPolicy
 
     public function before(User $user)
     {
-        if ($user->role_id == Role::IS_SUPER_ADMIN) {
-            return true;
-        }
+
     }
 
     /**
@@ -38,7 +36,7 @@ class ProductPolicy
      */
     public function view(User $user, Product $product)
     {
-        //
+
     }
 
     /**
@@ -49,8 +47,9 @@ class ProductPolicy
      */
     public function create(User $user)
     {
-        return in_array($user->role_id,
-            [ Role::IS_ADMIN, Role::IS_SHOP_OWNER ]);
+        if ($user->can('create products')) {
+            return true;
+        }
 
     }
 
@@ -63,8 +62,10 @@ class ProductPolicy
      */
     public function update(User $user, Product $product)
     {
-        return in_array($user->role_id,
-            [ Role::IS_ADMIN, Role::IS_SHOP_OWNER, Role::IS_WRITER ]);
+        if ($user->can('edit products')) {
+            return true;
+        }
+        return $user->id == $product->user_id;
     }
 
     /**
@@ -76,8 +77,11 @@ class ProductPolicy
      */
     public function delete(User $user, Product $product)
     {
-        return in_array($user->role_id,
-            [ Role::IS_ADMIN, Role::IS_SHOP_OWNER ]);
+
+        if ($user->can('delete products')) {
+            return true;
+        }
+        return $user->id == $product->user_id;
     }
 
     /**
@@ -101,7 +105,6 @@ class ProductPolicy
      */
     public function forceDelete(User $user, Product $product)
     {
-        return in_array($user->role_id,
-            [ Role::IS_ADMIN, Role::IS_SHOP_OWNER ]);
+
     }
 }

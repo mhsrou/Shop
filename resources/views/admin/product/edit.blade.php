@@ -16,55 +16,30 @@
             </ul>
         </div>
     @endif
-    <div class="container bg-white">
-        <div class="row">
-            <div class="col-12 pt-2">
-                <a href="{{ route('admin.product.show', $product->id) }}" class="btn btn-outline-primary btn-sm">Go
-                    back</a>
-                <div class="border rounded mt-5 pl-4 pr-4 pt-4 pb-4">
-                    <h1 class="display-4">Edit product</h1>
-                    <hr>
-                    <form action="{{ route('admin.product.update', $product) }}" method="POST"
-                          enctype="multipart/form-data">
-                        @method('PUT')
-                        <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                        @csrf
-                        <div class="row">
-                            <div class="control-group col-12">
-                                <label for="name">Name title</label>
-                                <input type="text" id="name" class="form-control" name="name"
-                                       placeholder="Enter Post name" value="{{ $product->name }}" required>
-                            </div>
-                            <div class="control-group col-12 mt-2">
-                                <label for="desc">Description</label>
-                                <textarea id="desc" class="ckeditor form-control" name="desc"
-                                          placeholder="Enter desc" rows=""
-                                          required> {{ $product->desc }} </textarea>
-                            </div>
-                            <div class="control-group col-12 mt-2">
-                                <img class="img-thumbnail" src="{{ asset('images/' . $product->image) }}">
-                            </div>
-                            <div class="control-group col-12 mt-2">
-                                <label for="image">Image Upload</label>
-                                <input type="file" name="image" id="image" placeholder="Enter Post Body">
-                            </div>
-                            <div class="control-group col-12 mt-2">
-                                <label for="price">Price</label>
-                                <input type="number" name="price" id="price"
-                                       value={{ $product->price }} class="form-control" placeholder="Enter Price">
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="control-group col-12 text-center">
-                                <button id="btn-submit" class="btn btn-primary">
-                                    Update
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <form action="{{ route('product.update') }}" method="post">
+            @csrf
+            @method('patch')
+
+            <div class="p-10 card bg-base-200">
+                <div class="form-control">
+                    <label class="label" for="name">
+                        <span class="label-text">Name</span>
+                    </label>
+                    <input type="text" id="title" name="title" placeholder="Title" class="input input-bordered" required
+                        value="{{ old('name', $product->name) }}">
                 </div>
+                <div class="form-control mb-8">
+                    <label class="label" for="content">
+                        <span class="label-text">Text</span>
+                    </label>
+                    <textarea name="content" id="content" class="textarea input-bordered" placeholder="Text" rows="8"
+                        required>{{ old('desc', $product->desc) }}"</textarea>
+                </div>
+                <button type="submit" class="btn btn-lg w-full">Update</button>
             </div>
-        </div>
+        </form>
+    </div>
     </div>
 
 @endsection
@@ -72,7 +47,7 @@
 @section('editor')
     <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.ckeditor').ckeditor();
         });
     </script>
