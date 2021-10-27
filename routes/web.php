@@ -33,9 +33,6 @@ Route::delete('/product/{product}/force', [ProductController::class, 'forceDelet
 Route::patch('/product/{product}/restore', [ProductController::class, 'restore'])
     ->name('product.restore');
 
-Route::get('/dproduct', [ProductController::class, 'deletedProducts'])
-    ->name('product.deleted');
-
 
 Route::prefix('/admin')->name('admin.')->group(function () {
 

@@ -285,7 +285,7 @@ return [
             'label_color' => 'success',
         ],
         [
-            'text'        => 'add-products',
+            'text'        => 'add-product',
             'url'         => 'product/create',
             'icon'        => 'fas fa-fw fa-file-import',
             'label'       => 4,

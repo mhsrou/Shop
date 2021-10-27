@@ -30,6 +30,7 @@ class ProductFactory extends Factory
             'is_incredible' => rand(0,1)<0.5,
             'category_id'=>rand(1,11),
             'user_id' =>rand(1,10),
+            'status' => $this->faker->randomElement(['draft', 'published']),
         ];
     }
 }

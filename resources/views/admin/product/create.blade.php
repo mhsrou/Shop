@@ -1,57 +1,84 @@
 @extends('layouts.app')
 @section('content')
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-@endif
-<div class="container bg-white">
-    <div class="row">
-        <div class="col-12 pt-2">
-            <a href="admin/product" class="btn btn-outline-primary btn-sm">Go back</a>
-            <div class="border rounded mt-5 pl-4 pr-4 pt-4 pb-4">
-                <h2 class="display-4">Create a New Product Post</h2>
-                <p>Fill and submit for a new product</p>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+    @endif
 
-                <hr>
-
-                <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="user_id" value="{{Auth::id()}}">
-                    @csrf
-                    <div class="row">
-                        <div class="control-group col-12">
-                            <label for="name">Name title</label>
-                            <input type="text" id="name" class="form-control" name="name" required>
+    <div class="container">
+        <div class="p-4">
+            <div class="mb-6 space-y-6">
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div>
+                            <label>{{ $error }}</label>
                         </div>
-                        <div class="control-group col-12 mt-2">
-                            <label for="desc">Description</label>
-                            <textarea id="desc" class="ckeditor form-control" name="desc"
-                                      placeholder="Enter desc" rows=""></textarea>
-                        </div>
-                        <div class="control-group col-12 mt-2">
-                            <label for="image">Image Upload</label>
-                            <input type="file" name="image" id="image">
-                        </div>
-                        <div class="control-group col-12 mt-2">
-                            <label for="price">Price</label>
-                            <input type="number" name="price" id="price" class="form-control" placeholder="Enter Price">
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="control-group col-12 text-center">
-                            <button id="btn-submit" class="btn btn-primary">
-                                Create
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                    @endforeach
+                @endif
             </div>
+            <form action="{{ route('product.store') }}" method="post" enctype="multipart/form-data">
+                @csrf
+
+                <div class="gap-3">
+                    <div class="p-2">
+                        <select name="status" class="form-control select w-full" required>
+                            <option disabled="disabled" selected="selected">Choose Product status</option>
+                            <option value="draft">Draft</option>
+                            <option value="published">Published</option>
+                        </select>
+                    </div>
+
+                    <div class="p-2">
+                        <label class="label" for="category_id">
+                            <span class="label-text">Categories</span>
+                        </label>
+                        <select name="category_id" id="category_id" class="form-control select select-bordered w-full">
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="p-2">
+                        <label class="label" for="name">
+                            <span class="label-text">Name</span>
+                        </label>
+                        <input type="text" id="name" name="name" placeholder="Name" class="form-control" required
+                            value="{{ old('name') }}" />
+                    </div>
+
+                    <div class="p-2">
+                        <label class="label" for="content">
+                            <span class="label-text">Description</span>
+                        </label>
+                        <textarea name="content" id="content" class="ckeditor form-control" placeholder="Text" rows="8"
+                            required value="{{ old('content') }}"></textarea>
+                    </div>
+
+                    <div class="d-flex flex-row bd-highlight p-2">
+                        <div class="pr-5">
+                            <label class="label">Primary image :
+                                <input type="file" name="image" class="form-control" required />
+                            </label>
+                        </div>
+                        <div>
+                            <label class="label">Gallery images :
+                                <input type="file" name="gallery[]" class="form-control" required multiple />
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="d-grid p-2">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-</div>
 @endsection
 
 @section('editor')

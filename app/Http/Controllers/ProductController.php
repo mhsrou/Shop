@@ -6,6 +6,8 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -27,9 +29,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Product::class);
-
-        return view('admin.product.create');
+        $categories = Category::whereNotNull('parent_id')->get();
+        return view('admin.product.create', compact('categories'));
     }
 
     /**
@@ -40,26 +41,36 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-
-        $this->authorize('create', Product::class);
-
-        $imageName = time() . '.' . $request->image->extension();
-
-
-        if ($request->hasFile('image'))
-            $path = Storage::putFileAs(
-                'images', $request->file('image'), $imageName
-            );
-
-        //$request->image->move(public_path('images'), $imageName);
-
         $validated = $request->validated();
 
-        $validated['image'] = $imageName;
+        $product = DB::transaction(function () use ($validated, $request) {
 
-        $newProduct = Product::create($validated);
+            $product = auth()->user()->products()->create($validated);
+            $product->user_id = Auth::user()->id;
 
-        return redirect(route('admin.product.show', $newProduct->id))->with('create', 'Product created');
+            if (isset($validated['category_id']))
+                $product->categories()->sync($validated['category_id']);
+
+            $path = $request->file('image')->storePublicly('products');
+            $product->images()->create([
+                'url' => $path,
+                'name' => $request->file('image')->getClientOriginalName(),
+            ]);
+
+            return $product;
+        });
+
+        foreach ($request->file('gallery') as $file) {
+            $path = $file->storePublicly("posts/gallery/$product->id");
+            $product->images()->create([
+                'url' => $path,
+                'name' => $file->getClientOriginalName(),
+            ]);
+        }
+
+        return redirect()
+            ->route('product.index')
+            ->with('message', "Post $product->name Created Successfully!");
     }
 
     /**
@@ -81,7 +92,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('admin.product.edit')->with('product', $product);
+        $categories = Category::whereNotNull('parent_id')->get();
+        return view('admin.product.edit', compact('product', 'categories'));
     }
 
     /**
@@ -93,25 +105,22 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
-        $this->authorize('create', $product);
+        $imageName = time() . '.' . $request->image->extension();
 
-        if ($request->has('image')) {
-
-            $imageName = time() . '.' . $request->image->extension();
-
-            $request->image->move(public_path('images'), $imageName);
-
-        } else {
-            $imageName = $product->image;
-        }
+        if ($request->hasFile('image'))
+            Storage::putFileAs(
+                'images',
+                $request->file('image'),
+                $imageName
+            );
 
         $validated = $request->validated();
 
         $validated['image'] = $imageName;
 
-        $updatedProduct = $product->update($validated);
+        $product->update($validated);
 
-        return redirect(route('admin.product.show', $updatedProduct))->with('update', 'Product updated successfully');
+        return redirect(route('admin.product.index'))->with('update', 'Product updated successfully');
     }
 
     /**
@@ -122,34 +131,24 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        $this->authorize('delete', $product);
-
         Product::find($product->id)->delete();
 
-        return back()->with('product', $product->id)
-            ->with('delete', 'Product post deleted');
+        return redirect()
+            ->route('product.index')->with('delete', 'Product deleted');
     }
 
     public function forceDelete($id)
     {
-        $this->authorize('delete', $id);
-
         Product::withTrashed()->find($id)->forceDelete();
 
         return redirect()
-            ->route('admin.product.index')->with('forceDelete', 'Product post deleted permanently');
+            ->route('product.index')->with('forceDelete', 'Product deleted permanently');
     }
 
     public function restore($id)
     {
         Product::withTrashed()->find($id)->restore();
 
-        return back()->with('product', 'Product post restored');
-    }
-
-    public function deletedProducts()
-    {
-        $products = Product::onlyTrashed()->paginate(10);
-        return view('admin.product.index')->with('products', $products);
+        return back()->with('product', 'Product restored');
     }
 }
