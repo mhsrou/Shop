@@ -16,4 +16,6 @@ mix.js('resources/js/app.js', 'public/js')
 mix.css('resources/css/styles.css', 'public/css')
 mix.css('resources/css/slider.css', 'public/css')
 
-//mix.browserSync(process.env.APP_URL)
+// mix.browserSync({
+//     'proxy': process.env.APP_URL
+// });

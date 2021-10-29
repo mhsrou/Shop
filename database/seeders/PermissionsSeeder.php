@@ -47,6 +47,7 @@ class PermissionsSeeder extends Seeder
 
         $role_admin->givePermissionTo('create users');
         $role_admin->givePermissionTo('edit users');
+        $role_admin->givePermissionTo('delete users');
         $role_admin->givePermissionTo('publish products');
         $role_admin->givePermissionTo('delete products');
         $role_admin->givePermissionTo('edit comments');
@@ -70,5 +71,14 @@ class PermissionsSeeder extends Seeder
         ]);
 
         $user->assignRole($role_super_admin);
+
+
+        $user2 = User::create([
+            'name' => 'Super Writer',
+            'email' => 'super_writer@example.com',
+            'password' => Hash::make('12345678'),
+        ]);
+
+        $user2->assignRole($role_writer);
     }
 }

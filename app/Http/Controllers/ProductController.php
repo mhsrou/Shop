@@ -42,14 +42,25 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $validated = $request->validated();
+        $imageName = $request->file('image')->getClientOriginalName();
 
-        $product = DB::transaction(function () use ($validated, $request) {
+        $validated['image'] = $imageName;
+
+        $product = DB::transaction(function () use ($validated, $request, $imageName) {
 
             $product = auth()->user()->products()->create($validated);
             $product->user_id = Auth::user()->id;
 
             if (isset($validated['category_id']))
                 $product->categories()->sync($validated['category_id']);
+
+
+            Storage::putFileAs(
+                'products',
+                $request->file('image'),
+                $imageName
+            );
+
 
             $path = $request->file('image')->storePublicly('products');
             $product->images()->create([
@@ -61,7 +72,7 @@ class ProductController extends Controller
         });
 
         foreach ($request->file('gallery') as $file) {
-            $path = $file->storePublicly("posts/gallery/$product->id");
+            $path = $file->storePublicly("products/gallery/$product->id");
             $product->images()->create([
                 'url' => $path,
                 'name' => $file->getClientOriginalName(),

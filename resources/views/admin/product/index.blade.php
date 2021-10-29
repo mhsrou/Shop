@@ -39,7 +39,7 @@
                         <tr>
                             <th scope="row">{{ $product->id }}</th>
                             <td>{{ $product->name }}</td>
-                            <td>{{ $product->user->name }}</td>
+                            <td>{{ $product->name }}</td>
                             <td>
                                 <img class="ratio" style="max-height: 50px;"
                                     src="{{ asset('storage/images/' . $product->image) }}" />

@@ -1,9 +1,9 @@
 @extends('product.main')
 @section('content')
-@push('css')
-<link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
-<link href="{{ asset('css/slider.css')}}" rel="stylesheet" />
-@endpush
+    @push('css')
+        <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/slider.css') }}" rel="stylesheet" />
+    @endpush
     @include('product.header')
 
     <section class="py-5">
@@ -16,31 +16,32 @@
                 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         @foreach ($incredibleProducts as $incredibleProduct)
-
                             @if ($loop->iteration % 3 == 1)
                                 <div class="carousel-item @if ($loop->first)active @endif">
                                     <div class="cards-wrapper">
                             @endif
                             <div class="card @if ($loop->iteration % 3 != 1) d-none d-md-block @endif">
-                                <div class="badge bg-info text-white position-absolute m-1">{{ $incredibleProduct->discount }}%
+                                <div class="badge bg-info text-white position-absolute m-1">
+                                    {{ $incredibleProduct->discount }}%
                                 </div>
-                                <img src="{{ asset('storage/images/' . $incredibleProduct->image) }}" class="card-img-top"
-                                    alt="...">
+                                <img src="{{ asset('storage/images/' . $incredibleProduct->image) }}"
+                                    class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $incredibleProduct->name }}</h5>
 
                                     <p class="card-text">
-                                        <span class="text-muted text-decoration-line-through">{{ $incredibleProduct->price }}</span>
-                                        {{ $incredibleProduct->price * (100 - $incredibleProduct->discount) }}
+                                        <span
+                                            class="text-muted text-decoration-line-through">{{ number_format($incredibleProduct->price) }}</span>
+                                        {{ number_format($incredibleProduct->price * (100 - $incredibleProduct->discount)) }}
                                     </p>
-                                    <a href="{{ route('product.show', $incredibleProduct) }}" class="btn btn-primary">More...</a>
+                                    <a href="{{ route('product.show', $incredibleProduct) }}"
+                                        class="btn btn-primary">More...</a>
                                 </div>
                             </div>
                             @if ($loop->iteration % 3 == 0 || $loop->last)
                     </div>
                 </div>
                 @endif
-
                 @endforeach
             </div>
 
@@ -59,43 +60,11 @@
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
             @foreach ($products as $product)
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Sale badge-->
-                        <div class="badge bg-red text-white position-absolute">{{ $product->discount }}%
-                        </div>
-                        <!-- Product image-->
-                        <a class="link-dark" href="{{ route('product.show', $product) }}">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="{{ asset('storage/images/' . $product->image) }}" />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">{{ $product->name }}</h5>
-                        </a>
-                        <!-- Product reviews-->
-                        <div class="d-flex justify-content-center small text-warning mb-2">
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                        </div>
-                        <!-- Product price-->
-                        <span class="text-muted text-decoration-line-through">{{ $product->price }}</span>
-                        {{ $product->price * (100 - $product->discount) }}
-                    </div>
-                </div>
-                <!-- Product actions-->
-                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-                </div>
+                @livewire('single-product',['product' => $product])
+            @endforeach
+
         </div>
-        </div>
-        @endforeach
-        </div>
-        </div>
+        {{-- //{{ $products->links() }} --}}
     </section>
 
 @endsection

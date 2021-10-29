@@ -252,7 +252,7 @@ return [
             'url'         => 'admin/user',
             'icon'        => 'fas fa-fw fa-users',
             'label'       => 4,
-            'label_color' => 'success',
+            'label_color' => 'primary',
         ],
         [
             'text'        => 'orders',

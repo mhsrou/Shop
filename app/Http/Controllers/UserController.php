@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
@@ -14,11 +16,23 @@ class UserController extends Controller
      */
     public function index()
     {
+        $roles = Role::all()->pluck('name');
         $users = User::withTrashed()->paginate(10);
-        return view('admin.user.index')->with('users', $users);
+        return view('admin.user.index',compact('roles', 'users'));
     }
 
-
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     */
+    public function update(User $user, Request $request)
+    {
+        $user->assignRole($request->role);
+        return back()->with('user', $user)
+            ->with('role', 'Role assigned');
+    }
 
     /**
      * Remove the specified resource from storage.

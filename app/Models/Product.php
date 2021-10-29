@@ -19,11 +19,20 @@ class Product extends Model
         'user_id',
     ];
 
+    protected $with = [
+        'user'
+    ];
+
     public function category(){
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class);
     }
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
     }
 }

@@ -13,7 +13,7 @@ class ProductPolicy
 
     public function before(User $user)
     {
-
+        return $user->hasRole('super_admin');
     }
 
     /**
@@ -24,7 +24,7 @@ class ProductPolicy
      */
     public function viewAny(User $user)
     {
-        //
+
     }
 
     /**
@@ -78,9 +78,8 @@ class ProductPolicy
     public function delete(User $user, Product $product)
     {
 
-        if ($user->can('delete products')) {
-            return true;
-        }
+        return $user->can('delete products');
+
         return $user->id == $product->user_id;
     }
 
@@ -105,6 +104,7 @@ class ProductPolicy
      */
     public function forceDelete(User $user, Product $product)
     {
+        return $user->hasRole('super_admin');
 
     }
 }

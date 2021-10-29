@@ -35,7 +35,7 @@
                         <label class="label" for="category_id">
                             <span class="label-text">Categories</span>
                         </label>
-                        <select name="category_id[]" id="category_id" class="form-control select select-bordered w-full">
+                        <select name="category_id[]" id="category_id" class="form-select">
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}" @if($product->category_id == $category->id) slected="selected" @endif>{{ $category->name }}</option>
                             @endforeach
