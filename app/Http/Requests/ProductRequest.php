@@ -25,14 +25,15 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:100',
-            'desc' => 'max:3000',
+            'name' => 'required|string',
+            'desc' => 'required|string',
             'price' => 'Integer',
-            'image' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
             'status' => [
                 'required',
-                Rule::in(['draft', 'published']),
-            ]
+                Rule::in(['draft', 'available', 'soon', 'running_out']),
+            ],
+            'image' =>'required|image',
+            'category_id.*' => 'exists:categories,id',
         ];
     }
 }

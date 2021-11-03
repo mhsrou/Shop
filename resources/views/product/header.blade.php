@@ -20,13 +20,13 @@
                 </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="{{ asset('storage/images/1.jpg')}}" >
+                        <img src="{{ asset('storage/products/1.jpg')}}" >
                     </div>
                     <div class="carousel-item">
-                        <img src="{{ asset('storage/images/2.jpg')}}" >
+                        <img src="{{ asset('storage/products/2.jpg')}}" >
                     </div>
                     <div class="carousel-item">
-                        <img src="{{ asset('storage/images/3.jpg')}}" >
+                        <img src="{{ asset('storage/products/3.jpg')}}" >
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"

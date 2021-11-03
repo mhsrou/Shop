@@ -14,8 +14,8 @@ class AddIsIncredibleAndDiscountToProducts extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->boolean('is_incredible')->default(false)->after('price');
-            $table->integer('discount')->default(0)->after('price');
+            $table->boolean('is_incredible')->default(false)->after('status');
+            $table->integer('discount')->default(0)->after('status');
         });
     }
 

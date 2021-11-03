@@ -15,7 +15,7 @@
                             <!-- Sale badge-->
                             <a class="link-dark" href="{{ route('category.show', $category) }}">
                                 <!-- Product image-->
-                                <img class="card-img-top" src="{{ asset('storage/images/' . $category->image) }}" />
+                                <img class="card-img-top" src="{{ asset('storage/products/' . $category->image) }}" />
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">

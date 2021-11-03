@@ -28,7 +28,7 @@
             <div class="col-lg-8">
                 <div class="card mb-4">
                     <a href="#!"><img class="img-thumbnail" width="450px" height="450px"
-                                      src="{{ asset('storage/images/' . $product->image) }}"></a>
+                                      src="{{ \Illuminate\Support\Facades\Storage::url($product->images[0]->url) }}"></a>
                     <div class="card-body">
                         <div class="small text-muted">{{ $product->updated_at }}</div>
                         <h2 class="card-title">{{ $product->name }}</h2>

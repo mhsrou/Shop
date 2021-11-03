@@ -30,7 +30,7 @@
                         <th scope="col">Title</th>
                         <th scope="col">Author</th>
                         <th scope="col">Image</th>
-                        <th scope="col">Status</th>
+                        <th scope="col">Discount</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -41,11 +41,11 @@
                             <td>{{ $product->name }}</td>
                             <td>{{ $product->name }}</td>
                             <td>
-                                <img class="ratio" style="max-height: 50px;"
-                                    src="{{ asset('storage/images/' . $product->image) }}" />
+                                <img class="ratio" style="max-height: 45px; max-width:55px;"
+                                     src="{{ \Illuminate\Support\Facades\Storage::url($product->images[0]->url) }}" />
                             </td>
                             <td>
-                                @if ($product->deleted_at) not active @else active @endif
+                                {{$product->discount}}
                             </td>
                             <td>
                                 @if ($product->deleted_at)
@@ -55,7 +55,7 @@
                                         @method('PATCH')
                                         <button class="btn btn-success" type="submit">Restore</button>
                                     </form>
-                                    <form style="display:inline" method="post" onclick="return confirm('Deactivate user permenantly?')"
+                                    <form style="display:inline" method="post" onclick="return confirm('Deactivate product permanently?')"
                                         action="{{ route('product.forceDelete', $product) }}">
                                         @csrf
                                         @method('DELETE')
@@ -63,7 +63,7 @@
                                     </form>
                                 @else
                                     <a href="{{ route('product.edit', $product) }}" class="btn btn-primary">Edit</a>
-                                    <form style="display:inline" method="post" onclick="return confirm('Delete user?')"
+                                    <form style="display:inline" method="post" onclick="return confirm('Delete product?')"
                                         action="{{ route('product.destroy', $product) }}">
                                         @csrf
                                         @method('DELETE')

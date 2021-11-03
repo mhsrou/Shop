@@ -13,7 +13,6 @@ class Product extends Model
     protected $fillable = [
         'name',
         'desc',
-        'image',
         'price',
         'category_id',
         'user_id',
@@ -31,8 +30,30 @@ class Product extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function variations(){
+        return $this->hasMany(Variation::class);
+    }
+
     public function images()
     {
         return $this->morphMany(Image::class, 'imageable');
+    }
+
+    public function getMainImageAttribute()
+    {
+        return $this->images()->first();
+    }
+
+    public function getPriceAttribute()
+    {
+        return $this->variations()->orderBy('price')->first()->price ?? 0;
+    }
+
+    public function getStatusAttribute()
+    {
+        if($this->variations()->count() == 0)
+            return 'empty';
+
+        return $this->attributes['status'];
     }
 }

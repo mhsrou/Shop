@@ -24,7 +24,7 @@
                                 <div class="badge bg-info text-white position-absolute m-1">
                                     {{ $incredibleProduct->discount }}%
                                 </div>
-                                <img src="{{ asset('storage/images/' . $incredibleProduct->image) }}"
+                                <img src="{{ \Illuminate\Support\Facades\Storage::url($incredibleProduct->images[0]->url) }}"
                                     class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $incredibleProduct->name }}</h5>
@@ -64,7 +64,7 @@
             @endforeach
 
         </div>
-        {{-- //{{ $products->links() }} --}}
+         {{ $products->links() }}
     </section>
 
 @endsection

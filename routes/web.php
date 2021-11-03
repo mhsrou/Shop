@@ -21,8 +21,6 @@ Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__ . '/auth.php';
-
 //products-------
 
 Route::get('/main/{category}', [HomeController::class,'index'])->name('home.index');
@@ -37,6 +35,7 @@ Route::delete('/product/{product}/force', [ProductController::class, 'forceDelet
 Route::patch('/product/{product}/restore', [ProductController::class, 'restore'])
     ->name('product.restore');
 
+//admin
 
 Route::prefix('/admin')->name('admin.')->group(function () {
 
@@ -51,8 +50,13 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         ->name('user.restore');
 });
 
-//Auth::routes();
+Auth::routes();
 
 //category
 
 Route::resource('/category', CategoryController::class);
+
+Route::get('clearsession', function () {
+    session()->flush();
+});
+
