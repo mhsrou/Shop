@@ -19,15 +19,22 @@
                             aria-label="Slide 3"></button>
                 </div>
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="{{ asset('storage/products/1.jpg')}}" >
+                    @foreach($sliders as $slider)
+                    <div class="carousel-item @if ($loop->first)active @endif">
+                        <a href="{{ route('show', $slider) }}">
+                            <div class="cards-wrapper">
+                                <div class="card">
+                                    <div class="badge bg-info text-white position-absolute m-1">
+                                        {{ $slider->discount }}%
+                                    </div>
+                                    <img
+                                        src="{{ \Illuminate\Support\Facades\Storage::url($slider->images[0]->url) }}"
+                                        class="card-img-top" alt="...">
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                    <div class="carousel-item">
-                        <img src="{{ asset('storage/products/2.jpg')}}" >
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{{ asset('storage/products/3.jpg')}}" >
-                    </div>
+                    @endforeach
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
                         data-bs-slide="prev">

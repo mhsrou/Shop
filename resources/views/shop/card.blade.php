@@ -1,14 +1,14 @@
 @extends('layouts.app')
+@include('product.nav')
+@push('css')
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+@endpush
 @section('content')
-    @include('product.nav')
 
-    @push('css')
-        <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
-    @endpush
 
     <main class="container align-text-top p-5">
 
-        <table class="table caption-top table-hover text-center">
+        <table class="table table-hover text-center">
             <caption>{{auth()->user()->name.'`s cart'}}</caption>
             <thead class="table-light">
             <tr>
@@ -39,6 +39,7 @@
             </tr>
             </tfoot>
         </table>
+        <a href="{{route('purchase',end($my_card))}}" class="btn btn-primary">Purchase</a>
     </main>
 
 @endsection

@@ -13,7 +13,7 @@
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Sale badge-->
-                            <a class="link-dark" href="{{ route('home.index', $category->id) }}">
+                            <a class="link-dark" href="{{ route('subcat', $category->id) }}">
                                 <!-- Product image-->
                                 <img class="card-img-top" src="{{ asset('storage/products/' . $category->image) }}" />
                                 <!-- Product details-->

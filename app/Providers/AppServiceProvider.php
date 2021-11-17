@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         \Illuminate\Pagination\Paginator::useBootstrap();
 
-//        $categories = Category::all();
-//        View::share('categories', $categories);
+        $sliders = Product::allAvailableProducts()->incredibleProducts()->get();
+        View::share('sliders', $sliders);
     }
 }

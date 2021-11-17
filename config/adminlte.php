@@ -242,8 +242,8 @@ return [
             'text' => 'search',
         ],
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
+            'text' => 'HOME',
+            'url'  => '/',
             'can'  => 'manage-blog',
         ],
 
@@ -279,23 +279,22 @@ return [
         ['header' => 'shop management'],
         [
             'text'        => 'products',
-            'url'         => 'product',
+            'url'         => 'products',
             'icon'        => 'fas fa-fw fa-barcode',
             'label'       => 4,
             'label_color' => 'success',
         ],
         [
             'text'        => 'add-product',
-            'url'         => 'product/create',
+            'url'         => 'products/create',
             'icon'        => 'fas fa-fw fa-file-import',
-            'label'       => 4,
             'label_color' => 'success',
         ],
         [
             'text'        => 'categories',
             'url'         => 'category',
             'icon'        => 'fas fa-fw fa-bars',
-            'label'       => 2,
+            'label'       => 3,
             'label_color' => 'success',
         ],
         [

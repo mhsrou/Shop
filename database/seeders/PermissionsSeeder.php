@@ -28,9 +28,24 @@ class PermissionsSeeder extends Seeder
 
         $role_admin = Role::create(['name' => 'admin']);
 
+        /**
+         * @var $role_writer Role
+         */
+
         $role_writer = Role::create(['name' => 'writer']);
 
+        /**
+         * @var $role_shop_owner Role
+         */
+
         $role_shop_owner = Role::create(['name' => 'shop_owner']);
+
+        /**
+         * @var $role_customer Role
+         */
+
+        $role_customer = Role::create(['name' => 'customer']);
+
 
         Permission::create(['name' => 'create users']);
         Permission::create(['name' => 'edit users']);
@@ -41,20 +56,14 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'delete products']);
         Permission::create(['name' => 'publish products']);
 
-        Permission::create(['name' => 'edit comments']);
-        Permission::create(['name' => 'delete comments']);
-        Permission::create(['name' => 'approve comments']);
-
         $role_admin->givePermissionTo('create users');
         $role_admin->givePermissionTo('edit users');
         $role_admin->givePermissionTo('delete users');
         $role_admin->givePermissionTo('publish products');
+        $role_admin->givePermissionTo('create products');
         $role_admin->givePermissionTo('delete products');
-        $role_admin->givePermissionTo('edit comments');
-        $role_admin->givePermissionTo('delete comments');
-        $role_admin->givePermissionTo('approve comments');
+        $role_admin->givePermissionTo('edit products');
 
-        $role_writer->givePermissionTo('create products');
         $role_writer->givePermissionTo('edit products');
         $role_writer->givePermissionTo('delete products');
 
@@ -80,5 +89,13 @@ class PermissionsSeeder extends Seeder
         ]);
 
         $user2->assignRole($role_writer);
+
+        $users = User::factory()
+            ->count(10)
+            ->create();
+
+        foreach($users as $user) {
+            $user->assignRole($role_customer);
+        }
     }
 }

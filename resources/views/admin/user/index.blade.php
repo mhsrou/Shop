@@ -7,6 +7,13 @@
             </ul>
         </div>
     @endif
+    @if (session('delete'))
+        <div class="alert alert-danger">
+            <ul>
+                {{ session('delete') }}
+            </ul>
+        </div>
+    @endif
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
@@ -52,7 +59,7 @@
                                         @method('PUT')
                                         <select class="form-select" name="role">
                                             @foreach ($roles as $role)
-                                                <option value="{{ $role }}" @if ($user->getRoleNames()->first() == $role) selected="selected" @endif>
+                                                @if($loop->first) @continue @endif<option value="{{ $role }}" @if ($user->getRoleNames()->first() == $role) selected="selected" @endif>
                                                     {{ $role }}</option>
                                             @endforeach
                                         </select>
@@ -67,9 +74,6 @@
                         <h4 class="alert-heading">Nothing here</h4>
                     </div>
                 @endforelse
-                @foreach ($user->getRoleNames() as $role)
-                    {{ $role }}
-                @endforeach
                 <div class="m-6">
                     {{ $users->links() }}
                 </div>

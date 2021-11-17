@@ -32,7 +32,7 @@ class ProductRequest extends FormRequest
                 'required',
                 Rule::in(['draft', 'available', 'soon', 'running_out']),
             ],
-            'image' =>'required|image',
+            'image' =>'image',
             'category_id.*' => 'exists:categories,id',
         ];
     }

@@ -13,9 +13,8 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
-mix.css('resources/css/styles.css', 'public/css')
-mix.css('resources/css/slider.css', 'public/css')
-
-// mix.browserSync({
-//     'proxy': process.env.APP_URL
-// });
+    .css('resources/css/app.css', 'public/css')
+    .css('resources/css/slider.css', 'public/css')
+    .css('resources/css/styles.css', 'public/css')
+    .css('resources/css/profile.css', 'public/css')
+    .sourceMaps();

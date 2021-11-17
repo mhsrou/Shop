@@ -2,31 +2,58 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Display a listing of the resource.
      *
-     * @return void
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function __construct()
+    public function index()
     {
-        $this->middleware('auth');
+        $products = Product::withoutTrashed()->allAvailableProducts()->paginate(12);
+        $incredibleProducts = Product::withoutTrashed()->incredibleProducts()->get();
+        return view('product.home', compact('products','incredibleProducts'));
     }
 
     /**
-     * Show the application dashboard.
+     * Display the specified resource.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @param int $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index($id)
+    public function show($id)
     {
-        $products = Product::where('category_id', $id)->get();
-        $incredibleProducts = Product::where('category_id', $id)->where('is_incredible', 1)->withoutTrashed()->get();
-        return view('product.home', compact('products','incredibleProducts'));
+        $product = Product::findOrFail($id);
+        $relatedProducts = Product::withoutTrashed()->where('category_id', $product->category_id)->get();
+        return view('product.show', compact('product','relatedProducts'));
     }
-    
+
+    public function showAll()
+    {
+        $products = Product::withoutTrashed()->paginate(12);
+        return view('product.query', compact('products'));
+    }
+
+    public function showIncredible()
+    {
+        $products = Product::withoutTrashed()->allAvailableProducts()->incredibleProducts()->paginate(12);
+        return view('product.query', compact('products'));
+    }
+
+    public function showSoon()
+    {
+        $products = Product::withoutTrashed()->soonProducts()->paginate(12);
+        return view('product.query', compact('products'));
+    }
+
+    public function showRunningOut()
+    {
+        $products = Product::withoutTrashed()->runningOutProducts()->paginate(12);
+        return view('product.query', compact('products'));
+    }
+
 }

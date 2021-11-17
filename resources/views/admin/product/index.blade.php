@@ -50,21 +50,21 @@
                             <td>
                                 @if ($product->deleted_at)
                                     <form style="display:inline" method="post"
-                                        action="{{ route('product.restore', $product) }}">
+                                        action="{{ route('products.restore', $product) }}">
                                         @csrf
                                         @method('PATCH')
                                         <button class="btn btn-success" type="submit">Restore</button>
                                     </form>
                                     <form style="display:inline" method="post" onclick="return confirm('Deactivate product permanently?')"
-                                        action="{{ route('product.forceDelete', $product) }}">
+                                        action="{{ route('products.forceDelete', $product) }}">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-dark" type="submit">Force Delete</button>
                                     </form>
                                 @else
-                                    <a href="{{ route('product.edit', $product) }}" class="btn btn-primary">Edit</a>
+                                    <a href="{{ route('products.edit', $product) }}" class="btn btn-primary">Edit</a>
                                     <form style="display:inline" method="post" onclick="return confirm('Delete product?')"
-                                        action="{{ route('product.destroy', $product) }}">
+                                        action="{{ route('products.destroy', $product) }}">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger" type="submit">Delete</button>

@@ -21,7 +21,7 @@
                     @endforeach
                 @endif
             </div>
-            <form action="{{ route('product.store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('products.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
 
                 <div class="gap-3">
@@ -64,7 +64,7 @@
                         </label>
                         <textarea name="desc" id="content" class="ckeditor form-control" placeholder="Text"
                                   rows="8"
-                                  required value="{{ old('content') }}"></textarea>
+                                  required value="{{ old('desc') }}"></textarea>
                     </div>
 
                     <div class="d-flex flex-row bd-highlight p-2">

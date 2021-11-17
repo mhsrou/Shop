@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,6 +17,8 @@ class Product extends Model
         'price',
         'category_id',
         'user_id',
+        'discount',
+        'status',
     ];
 
     protected $with = [
@@ -55,5 +58,25 @@ class Product extends Model
             return 'empty';
 
         return $this->attributes['status'];
+    }
+
+    public function scopeAllAvailableProducts(Builder $query)
+    {
+        return $query->where('status', 'available');
+    }
+
+    public function scopeIncredibleProducts(Builder $query)
+    {
+        return $query->where('is_incredible', 1);
+    }
+
+    public function scopeSoonProducts(Builder $query)
+    {
+        return $query->where('status', 'soon');
+    }
+
+    public function scopeRunningOutProducts(Builder $query)
+    {
+        return $query->where('status', 'running_out');
     }
 }
