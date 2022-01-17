@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
 
@@ -14,14 +15,14 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'name' => 'Super Admin',
-            'email' => 'superadmin@example.com',
-            'password' => '12345678',
-        ]);
+//        Product::factory()
+//            ->count(29)
+//            ->create();
 
-        Product::factory()
-            ->count(10)
-            ->create();
+        for($i = 0; $i < 30;$i++){
+            Image::factory()->count(3)->for(
+                Product::factory(), 'imageable'
+            )->create();
+        }
     }
 }

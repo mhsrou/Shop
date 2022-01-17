@@ -12,5 +12,9 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .vue()
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css')
+    .css('resources/css/app.css', 'public/css')
+    .css('resources/css/slider.css', 'public/css')
+    .css('resources/css/styles.css', 'public/css')
+    .css('resources/css/profile.css', 'public/css')
+    .sourceMaps();

@@ -15,7 +15,7 @@ return [
     */
 
     'title' => 'AdminLTE 3',
-    'title_prefix' => '',
+    'title_prefix' => 'Shop',
     'title_postfix' => '',
 
     /*
@@ -31,7 +31,7 @@ return [
     */
 
     'use_ico_only' => false,
-    'use_full_favicon' => false,
+    'use_full_favicon' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -242,81 +242,85 @@ return [
             'text' => 'search',
         ],
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
+            'text' => 'HOME',
+            'url'  => '/',
             'can'  => 'manage-blog',
         ],
+
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
+            'text'        => 'users',
+            'url'         => 'admin/user',
+            'icon'        => 'fas fa-fw fa-users',
+            'label'       => 4,
+            'label_color' => 'primary',
+        ],
+        [
+            'text'        => 'orders',
+            'url'         => 'admin/orders',
+            'icon'        => 'fas fa-fw fa-file-import',
+            'label'       => 7,
+            'label_color' => 'success',
+        ],
+        ['header' => 'finance'],
+        [
+            'text'        => 'transactions',
+            'url'         => 'admin/transaction',
+            'icon'        => 'far fa-fw fa-file-alt',
             'label'       => 4,
             'label_color' => 'success',
         ],
-        ['header' => 'account_settings'],
         [
-            'text' => 'profile',
+            'text'        => 'discount',
+            'url'         => 'admin/discount',
+            'icon'        => 'fas fa-fw fa-share',
+            'label'       => 1,
+            'label_color' => 'danger',
+        ],
+        ['header' => 'shop management'],
+        [
+            'text'        => 'products',
+            'url'         => 'products',
+            'icon'        => 'fas fa-fw fa-barcode',
+            'label'       => 4,
+            'label_color' => 'success',
+        ],
+        [
+            'text'        => 'add-product',
+            'url'         => 'products/create',
+            'icon'        => 'fas fa-fw fa-file-import',
+            'label_color' => 'success',
+        ],
+        [
+            'text'        => 'categories',
+            'url'         => 'category',
+            'icon'        => 'fas fa-fw fa-bars',
+            'label'       => 3,
+            'label_color' => 'success',
+        ],
+        [
+            'text'        => 'attributes',
+            'url'         => 'admin/category',
+            'icon'        => 'fas fa-fw fa-info',
+            'label'       => 4,
+            'label_color' => 'success',
+        ],
+        [
+            'text'        => 'comments',
+            'url'         => 'admin/comment',
+            'icon'        => 'far fa-fw fa-file',
+            'label'       => 6,
+            'label_color' => 'primary',
+        ],
+        ['header' => 'site management'],
+        [
+            'text' => 'main menue',
             'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'fas fa-fw fa-cog',
         ],
         [
-            'text' => 'change_password',
+            'text' => 'settings',
             'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-            ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
+            'icon' => 'fas fa-fw fa-cogs',
         ],
     ],
 
