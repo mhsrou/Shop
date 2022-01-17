@@ -40,7 +40,7 @@
 
                     <div class="p-2">
                         <label class="label" for="category_id">
-                            <span class="label-text">Categories</span>
+                            <span class="label-text">Categoriess</span>
                         </label>
                         <select name="category_id" id="category_id" class="form-select">
                             @foreach ($categories as $category)
